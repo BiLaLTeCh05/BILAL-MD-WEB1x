@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A multi functional whatsapp bot Web paircode.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "pm2 start index.js --deep-monitoring --attach --name SPIRITY-XMD_PAIR",
     "stop": "pm2 stop SPIRITY-XMD_PAIR",
