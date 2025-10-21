@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>👑 BILAL-MD 👑</title>
+  <link rel="icon" type="image/jpg" href="megalodon.jpg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #001f3f;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #ee82ee);
+      background-size: 500% 500%;
+      animation: glow 15s ease infinite;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    @keyframes glow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 64, 0.9);
+      border-radius: 18px;
+      padding: 2rem;
+      text-align: center;
+      max-width: 480px;
+      box-shadow: 0 0 25px #0074D9;
+    }
+
+    /* ✅ Full HD Image – No Resize, No Crop */
+    .card img.profile {
+      width: 100%;
+      height: auto;
+      max-height: 300px; /* optional limit */
+      border-radius: 12px; /* circle ke liye 50% likh do */
+      border: 4px solid #0074D9;
+      margin-bottom: 1rem;
+      object-fit: contain; /* maintain full image ratio */
+      image-rendering: high-quality;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 1rem;
+      color: #00aaff;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: transparent;
+      border: 2px solid #0074D9;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.4s;
+      animation: buttonGlow 4s linear infinite;
+    }
+
+    @keyframes buttonGlow {
+      0% { box-shadow: 0 0 10px #ff0000; border-color: #ff0000; }
+      33% { box-shadow: 0 0 10px #00ff00; border-color: #00ff00; }
+      66% { box-shadow: 0 0 10px #0074D9; border-color: #0074D9; }
+      100% { box-shadow: 0 0 10px #ff0000; border-color: #ff0000; }
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    .footer {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #bbb;
+    }
+
+    audio {
+      margin-top: 1rem;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    #digital-clock {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      color: #00ffcc;
+    }
+
+    .tz-flag {
+      width: 20px;
+      height: 12px;
+      border-radius: 2px;
+      border: 1px solid #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- 👇 yahan apna photo link lagao -->
+    <img src="https://files.catbox.moe/kunzpz.png" alt="Your Photo" class="profile" />
+
+    <h1>👑 BILAL-MD 👑</h1>
+
+    <button class="btn" onclick="window.open('https://bilal-md-wa-bot-d86d68ab0755.herokuapp.com/pair', '_blank')">👑 PAIR 👑</button>
+    <button class="btn" onclick="window.open('https://dashboard.heroku.com/new?template=https://github.com/BiLaLTeCh05/BILAL-MD', '_blank')">👑 DEPLOY 👑</button>
+    <button class="btn" onclick="window.open('https://github.com/BilalTech05/BILAL-MD/fork', '_blank')">👑 REPO 👑</button>
+    <button class="btn" onclick="window.open('https://akaserein.github.io/Bilal/', '_blank')">👑 OWNER 👑</button>
+    <button class="btn" onclick="window.open('https://whatsapp.com/channel/0029Vaj3Xnu17EmtDxTNnQ0G')">👑 CHANNEL 👑</button>
+    <button class="btn" onclick="window.open('https://chat.whatsapp.com/BwWffeDwiqe6cjDDklYJ5m?mode=ems_copy_t')">👑 GROUP 👑</button>
+
+
+    <div id="digital-clock">
+      <span id="time"></span>
+      <img src="https://files.catbox.moe/zmhz85.jpg" alt="Flag" class="tz-flag">
+    </div>
+
+    <div class="footer">👑 BILAL-MD WHATSAPP BOT 👑</div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const options = {
+        timeZone: 'Asia/Karachi',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      const now = new Date().toLocaleTimeString('en-GB', options);
+      document.getElementById('time').textContent = now;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+  </script>
+</body>
+</html>
