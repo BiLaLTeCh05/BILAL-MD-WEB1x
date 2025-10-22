@@ -1,319 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>👑 BILAL-MD 👑 - Access Verification</title>
-    <link rel="icon" type="image/jpg" href="megalodon.jpg">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>👑 BILAL-MD 👑 - Access Verification</title>
+<link rel="icon" type="image/jpg" href="megalodon.jpg">
+<style>
+/* ===================== GLOBAL STYLES ===================== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+body { background-color:#001f3f; color:white; display:flex; justify-content:center; align-items:center; min-height:100vh; position:relative; overflow:hidden; }
+body::before {
+    content:"";
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    background: linear-gradient(270deg,#ff0000,#ff7f00,#ffff00,#00ff00,#0000ff,#4b0082,#ee82ee);
+    background-size:500% 500%; animation:glow 15s ease infinite; opacity:0.3; z-index:0;
+}
+@keyframes glow { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+.card { position:relative; z-index:1; background:rgba(0,0,64,0.9); border-radius:18px; padding:2rem; text-align:center; max-width:480px; box-shadow:0 0 25px #0074D9; }
 
-    <style>
-        /* BASE & GLOBAL STYLES */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
+/* ===================== VERIFICATION PAGE ===================== */
+#verification-view h2 { font-size:1.8rem; color:#00aaff; margin-bottom:20px; }
+#verification-view p { color:#ccc; margin-bottom:15px; }
+#username-input { width:85%; padding:12px; margin-bottom:15px; border:1px solid #0074D9; border-radius:6px; font-size:16px; background:rgba(255,255,255,0.1); color:white; }
+#verify-button { padding:12px 25px; background-color:#28a745; color:white; border:none; border-radius:6px; cursor:pointer; font-size:16px; font-weight:bold; transition:background-color 0.3s; }
+#verify-button:hover { background-color:#218838; }
+#message { margin-top:20px; font-weight:bold; min-height:20px; }
+.fork-btn-link { display:none; padding:12px 25px; background-color:#ff0000; color:white; text-decoration:none; border-radius:6px; margin-top:15px; font-weight:bold; transition:background-color 0.3s; }
+.fork-btn-link:hover { background-color:#cc0000; }
+.success { color:#00ff00; }
+.error { color:#ff0000; }
 
-        body {
-            background-color: #001f3f;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Rainbow Glow Effect */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #ee82ee);
-            background-size: 500% 500%;
-            animation: glow 15s ease infinite;
-            opacity: 0.3;
-            z-index: 0;
-        }
-
-        @keyframes glow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Card/Content Box Styling (common for both views) */
-        .card {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 64, 0.9);
-            border-radius: 18px;
-            padding: 2rem;
-            text-align: center;
-            max-width: 480px;
-            box-shadow: 0 0 25px #0074D9;
-        }
-        
-        /* ============================================== */
-        /* 1. VERIFICATION VIEW SPECIFIC STYLING */
-        /* ============================================== */
-
-        #verification-view h2 { 
-            font-size: 1.8rem;
-            color: #00aaff;
-            margin-bottom: 20px; 
-        }
-        #verification-view p { 
-            color: #ccc; 
-            margin-bottom: 15px;
-        }
-        #username-input { 
-            width: 85%; 
-            padding: 12px; 
-            margin-bottom: 15px; 
-            border: 1px solid #0074D9; 
-            border-radius: 6px; 
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        #verify-button { 
-            padding: 12px 25px; 
-            background-color: #28a745; 
-            color: white; 
-            border: none; 
-            border-radius: 6px; 
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        #verify-button:hover { background-color: #218838; }
-        #message { margin-top: 20px; font-weight: bold; min-height: 20px; }
-        .fork-btn-link { 
-            display: none; 
-            padding: 12px 25px; 
-            background-color: #ff0000; 
-            color: white; 
-            text-decoration: none;
-            border-radius: 6px;
-            margin-top: 15px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        .fork-btn-link:hover { background-color: #cc0000; }
-        .success { color: #00ff00; }
-        .error { color: #ff0000; }
-
-
-        /* ============================================== */
-        /* 2. MAIN CONTENT VIEW (Your BILAL-MD Content) */
-        /* ============================================== */
-        
-        /* NOTE: display: none; will be forced by JavaScript on load */
-        #main-content-view {
-            /* Styling for the main content box */
-        }
-
-        /* Specific styles from your main.html */
-        #main-content-view img.profile {
-            width: 100%;
-            height: auto;
-            max-height: 300px;
-            border-radius: 12px;
-            border: 4px solid #0074D9;
-            margin-bottom: 1rem;
-            object-fit: contain;
-            image-rendering: high-quality;
-        }
-
-        #main-content-view h1 {
-            font-size: 1.9rem;
-            margin-bottom: 1rem;
-            color: #00aaff;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: transparent;
-            border: 2px solid #0074D9;
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.4s;
-            animation: buttonGlow 4s linear infinite;
-        }
-
-        @keyframes buttonGlow {
-            0% { box-shadow: 0 0 10px #ff0000; border-color: #ff0000; }
-            33% { box-shadow: 0 0 10px #00ff00; border-color: #00ff00; }
-            66% { box-shadow: 0 0 10px #0074D9; border-color: #0074D9; }
-            100% { box-shadow: 0 0 10px #ff0000; border-color: #ff0000; }
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-
-        .footer {
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: #bbb;
-        }
-
-        #digital-clock {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-size: 1rem;
-            color: #00ffcc;
-        }
-
-        .tz-flag {
-            width: 20px;
-            height: 12px;
-            border-radius: 2px;
-            border: 1px solid #fff;
-        }
-    </style>
+/* ===================== MAIN CONTENT PAGE ===================== */
+#main-content-view { display:none; }
+#main-content-view img.profile { width:100%; max-height:300px; border-radius:12px; border:4px solid #0074D9; margin-bottom:1rem; object-fit:contain; }
+#main-content-view h1 { font-size:1.9rem; margin-bottom:1rem; color:#00aaff; }
+.btn { display:block; width:100%; padding:12px; margin:10px 0; background:transparent; border:2px solid #0074D9; border-radius:8px; color:white; font-size:1rem; cursor:pointer; transition:0.4s; animation:buttonGlow 4s linear infinite; }
+@keyframes buttonGlow { 0%{box-shadow:0 0 10px #ff0000; border-color:#ff0000;} 33%{box-shadow:0 0 10px #00ff00; border-color:#00ff00;} 66%{box-shadow:0 0 10px #0074D9; border-color:#0074D9;} 100%{box-shadow:0 0 10px #ff0000; border-color:#ff0000;} }
+.btn:hover { background:rgba(255,255,255,0.1); transform:scale(1.05); }
+.footer { margin-top:1.5rem; font-size:0.85rem; color:#bbb; }
+#digital-clock { margin-top:1rem; display:flex; justify-content:center; align-items:center; gap:8px; font-size:1rem; color:#00ffcc; }
+.tz-flag { width:20px; height:12px; border-radius:2px; border:1px solid #fff; }
+</style>
 </head>
 <body>
-    
-    <div id="verification-view" class="card">
-        <h2>BILAL-MD Access Verification</h2>
-        <p>Apna GitHub Username dalain, agar aapne repo fork ki hai toh aapko access mil jayega:</p>
-        
-        <input type="text" id="username-input" placeholder="Apna GitHub Username (e.g., BilalTech05)">
-        <button id="verify-button" onclick="verifyFork()">Verify Fork & Access</button>
-        
-        <p id="message"></p>
-        
-        <a id="fork-link" target="_blank" class="fork-btn-link">
-            Pehle Repo Ko Fork Karein!
-        </a>
+
+<!-- ===================== VERIFICATION VIEW ===================== -->
+<div id="verification-view" class="card">
+    <h2>BILAL-MD Access Verification</h2>
+    <p>Apna GitHub Username dalain, agar aapne repo fork ki hai toh aapko access mil jayega:</p>
+    <input type="text" id="username-input" placeholder="Apna GitHub Username (e.g., BilalTech05)">
+    <button id="verify-button" onclick="verifyFork()">Verify Fork & Access</button>
+    <p id="message"></p>
+    <a id="fork-link" target="_blank" class="fork-btn-link">Pehle Repo Ko Fork Karein!</a>
+</div>
+
+<!-- ===================== MAIN CONTENT VIEW ===================== -->
+<div id="main-content-view" class="card">
+    <img src="https://files.catbox.moe/kunzpz.png" alt="Your Photo" class="profile" />
+    <h1>👑 BILAL-MD 👑</h1>
+    <button class="btn" onclick="window.open('https://bilal-md-wa-bot-d86d68ab0755.herokuapp.com/pair', '_blank')">👑 PAIR 👑</button>
+    <button class="btn" onclick="window.open('https://dashboard.heroku.com/new?template=https://github.com/BiLaLTeCh05/BILAL-MD', '_blank')">👑 DEPLOY 👑</button>
+    <button class="btn" onclick="window.open('https://github.com/BilalTech05/BILAL-MD/fork', '_blank')">👑 REPO 👑</button>
+    <button class="btn" onclick="window.open('https://akaserein.github.io/Bilal/', '_blank')">👑 OWNER 👑</button>
+    <button class="btn" onclick="window.open('https://whatsapp.com/channel/0029Vaj3Xnu17EmtDxTNnQ0G')">👑 CHANNEL 👑</button>
+    <button class="btn" onclick="window.open('https://chat.whatsapp.com/BwWffeDwiqe6cjDDklYJ5m?mode=ems_copy_t')">👑 GROUP 👑</button>
+
+    <div id="digital-clock">
+        <span id="time"></span>
+        <img src="https://files.catbox.moe/zmhz85.jpg" alt="Flag" class="tz-flag">
     </div>
 
-    <div id="main-content-view" class="card">
-        <img src="https://files.catbox.moe/kunzpz.png" alt="Your Photo" class="profile" />
+    <div class="footer">👑 BILAL-MD WHATSAPP BOT 👑</div>
+</div>
 
-        <h1>👑 BILAL-MD 👑</h1>
+<script>
+// ===================== CONFIG =====================
+const MAIN_REPO_OWNER = 'BilalTech05'; 
+const MAIN_REPO_NAME = 'BILAL-MD'; 
 
-        <button class="btn" onclick="window.open('https://bilal-md-wa-bot-d86d68ab0755.herokuapp.com/pair', '_blank')">👑 PAIR 👑</button>
-        <button class="btn" onclick="window.open('https://dashboard.heroku.com/new?template=https://github.com/BiLaLTeCh05/BILAL-MD', '_blank')">👑 DEPLOY 👑</button>
-        <button class="btn" onclick="window.open('https://github.com/BilalTech05/BILAL-MD/fork', '_blank')">👑 REPO 👑</button>
-        <button class="btn" onclick="window.open('https://akaserein.github.io/Bilal/', '_blank')">👑 OWNER 👑</button>
-        <button class="btn" onclick="window.open('https://whatsapp.com/channel/0029Vaj3Xnu17EmtDxTNnQ0G')">👑 CHANNEL 👑</button>
-        <button class="btn" onclick="window.open('https://chat.whatsapp.com/BwWffeDwiqe6cjDDklYJ5m?mode=ems_copy_t')">👑 GROUP 👑</button>
+// Elements
+const verificationView = document.getElementById('verification-view');
+const mainContentView = document.getElementById('main-content-view');
+const messageElement = document.getElementById('message');
+const forkLink = document.getElementById('fork-link');
 
-        <div id="digital-clock">
-            <span id="time"></span>
-            <img src="https://files.catbox.moe/zmhz85.jpg" alt="Flag" class="tz-flag">
-        </div>
+// Fork link set
+forkLink.href = `https://github.com/${MAIN_REPO_OWNER}/${MAIN_REPO_NAME}/fork`;
 
-        <div class="footer">👑 BILAL-MD WHATSAPP BOT 👑</div>
-    </div>
+// ===================== VERIFICATION FUNCTION =====================
+function verifyFork() {
+    const username = document.getElementById('username-input').value.trim();
+    messageElement.innerText = '';
+    forkLink.style.display = 'none';
+    messageElement.className = '';
 
-    <script>
-        // --- APKI REPO KI DETAILS ---
-        const MAIN_REPO_OWNER = 'BilalTech05'; 
-        const MAIN_REPO_NAME = 'BILAL-MD'; 
-        // -----------------------------
+    if (!username) {
+        messageElement.innerText = 'Meharbani karkay username dalain.';
+        messageElement.className = 'error';
+        return;
+    }
 
-        // Elements ko access karna
-        const verificationView = document.getElementById('verification-view');
-        const mainContentView = document.getElementById('main-content-view');
-        const messageElement = document.getElementById('message');
-        const forkLink = document.getElementById('fork-link');
-        
-        // Fork button ka link set karna
-        forkLink.href = `https://github.com/${MAIN_REPO_OWNER}/${MAIN_REPO_NAME}/fork`;
+    messageElement.innerText = 'Checking... Please wait.';
 
-        // Verification Function
-        function verifyFork() {
-            const username = document.getElementById('username-input').value.trim();
+    // --- DEMO LOGIC (Replace with real GitHub API check) ---
+    const FORK_SUCCESS = (username.toLowerCase() === MAIN_REPO_OWNER.toLowerCase() || username.toLowerCase() === 'testuser');
 
-            // Reset UI
-            messageElement.innerText = '';
-            forkLink.style.display = 'none';
-            messageElement.className = '';
+    setTimeout(() => {
+        if (FORK_SUCCESS) {
+            messageElement.innerText = 'Fork Verified! Access Granted.';
+            messageElement.className = 'success';
 
-            if (!username) {
-                messageElement.innerText = 'Meharbani karkay username dalain.';
-                messageElement.className = 'error';
-                return;
-            }
-
-            messageElement.innerText = 'Checking... Please wait.';
-            
-            // ***************************************************************
-            // *** DEMO LOGIC (Asal API call yahan replace hogi) ***
-            // ***************************************************************
-            
-            const FORK_SUCCESS = (username.toLowerCase() === MAIN_REPO_OWNER.toLowerCase() || username.toLowerCase() === 'testuser');
-            
-            setTimeout(() => {
-                if (FORK_SUCCESS) {
-                     // ** SUCCESS: Verification view ko chupa do aur Main content view dikhao **
-                     messageElement.innerText = 'Fork Verified! Access Granted.';
-                     messageElement.className = 'success';
-                     
-                     verificationView.style.display = 'none'; // Index page chupa do
-                     mainContentView.style.display = 'block'; // Main content dikha do
-                     
-                     updateTime(); // Time update ko foran chalayen
-                } else {
-                    // ** FAIL: Error aur fork button dikhao **
-                    messageElement.innerText = `Aapne ${MAIN_REPO_NAME} ko fork nahin kiya.`;
-                    messageElement.className = 'error';
-                    forkLink.style.display = 'inline-block';
-                }
-            }, 1500); // Demo delay
+            verificationView.style.display = 'none';
+            mainContentView.style.display = 'block';
+            updateTime();
+        } else {
+            messageElement.innerText = `Aapne ${MAIN_REPO_NAME} ko fork nahin kiya.`;
+            messageElement.className = 'error';
+            forkLink.style.display = 'inline-block';
         }
+    }, 1200);
+}
 
-        // Time update function
-        function updateTime() {
-          const options = {
-            timeZone: 'Asia/Karachi',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-          };
-          const now = new Date().toLocaleTimeString('en-GB', options);
-          const timeElement = document.getElementById('time');
-          if (timeElement) {
-              timeElement.textContent = now;
-          }
-        }
+// ===================== CLOCK FUNCTION =====================
+function updateTime() {
+    const options = { timeZone:'Asia/Karachi', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false };
+    const now = new Date().toLocaleTimeString('en-GB', options);
+    const timeElement = document.getElementById('time');
+    if(timeElement) timeElement.textContent = now;
+}
+setInterval(updateTime, 1000);
 
-        // Time update interval ko start karna
-        setInterval(updateTime, 1000);
-        
-        
-        // ***************************************************************
-        // *** YAHAN WOH ZAROORI FIX HAI JO PAGE LOAD HOTE HI CHALEGA ***
-        // ***************************************************************
-        document.addEventListener('DOMContentLoaded', () => {
-             // Main content ko foran chupa do jab page load ho
-             if (mainContentView) {
-                 mainContentView.style.display = 'none';
-             }
-             // Aur verification view ko foran dikha do
-             if (verificationView) {
-                 verificationView.style.display = 'block';
-             }
-        });
-        
-    </script>
+// ===================== PAGE LOAD =====================
+document.addEventListener('DOMContentLoaded', () => {
+    mainContentView.style.display = 'none';
+    verificationView.style.display = 'block';
+});
+</script>
+
 </body>
 </html>
