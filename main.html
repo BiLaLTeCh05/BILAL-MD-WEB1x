@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>👑 BILAL-MD 👑</title>
+    <title>👑 BILAL-MD 👑 - Access Verification</title>
     <link rel="icon" type="image/jpg" href="megalodon.jpg">
 
     <style>
@@ -26,7 +26,7 @@
             position: relative;
         }
 
-        /* Rainbow Glow Effect (From your original main.html) */
+        /* Rainbow Glow Effect */
         body::before {
             content: "";
             position: absolute;
@@ -45,7 +45,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Card/Content Box Styling */
+        /* Card/Content Box Styling (common for both views) */
         .card {
             position: relative;
             z-index: 1;
@@ -82,7 +82,7 @@
         }
         #verify-button { 
             padding: 12px 25px; 
-            background-color: #28a745; /* Green for check */
+            background-color: #28a745; 
             color: white; 
             border: none; 
             border-radius: 6px; 
@@ -96,7 +96,7 @@
         .fork-btn-link { 
             display: none; 
             padding: 12px 25px; 
-            background-color: #ff0000; /* Red for Fork */
+            background-color: #ff0000; 
             color: white; 
             text-decoration: none;
             border-radius: 6px;
@@ -114,8 +114,7 @@
         /* ============================================== */
         
         #main-content-view {
-            display: none; /* Pehle hidden rakhenge */
-            /* Using the .card styles for the content view */
+            display: none; /* <--- YAHAN CHANGE KIYA GAYA HAI */
         }
 
         /* Specific styles from your main.html */
@@ -221,7 +220,7 @@
         </div>
 
         <div class="footer">👑 BILAL-MD WHATSAPP BOT 👑</div>
-        </div>
+    </div>
 
     <script>
         // --- APKI REPO KI DETAILS ---
@@ -256,10 +255,9 @@
             messageElement.innerText = 'Checking... Please wait.';
             
             // ***************************************************************
-            // *** YAHAN ASLI FORK VERIFICATION LOGIC LAGE GI ***
+            // *** DEMO LOGIC (Asal API call yahan replace hogi) ***
             // ***************************************************************
             
-            // DEMO LOGIC: Agar user 'BilalTech05' ya 'testuser' dale ga to pass ho ga.
             const FORK_SUCCESS = (username.toLowerCase() === MAIN_REPO_OWNER.toLowerCase() || username.toLowerCase() === 'testuser');
             
             setTimeout(() => {
@@ -271,8 +269,7 @@
                      verificationView.style.display = 'none'; // Index page chupa do
                      mainContentView.style.display = 'block'; // Main content dikha do
                      
-                     // Agar main content mein koi script hai jo update honi chahiye, to usay yahan call kar sakte hain.
-                     updateTime(); 
+                     updateTime(); // Time update ko foran chalayen
                 } else {
                     // ** FAIL: Error aur fork button dikhao **
                     messageElement.innerText = `Aapne ${MAIN_REPO_NAME} ko fork nahin kiya.`;
@@ -282,7 +279,7 @@
             }, 1500); // Demo delay
         }
 
-        // Time update function (Aapke code se liya gaya)
+        // Time update function
         function updateTime() {
           const options = {
             timeZone: 'Asia/Karachi',
@@ -298,15 +295,13 @@
           }
         }
 
-        // Time update ko start karna
+        // Time update interval ko start karna
         setInterval(updateTime, 1000);
         
-        // Initial load par sirf verification view dikhana
-        verificationView.style.display = 'block';
-        mainContentView.style.display = 'none';
-        
-        // Page load hote hi time dikhana agar main content active ho.
+        // ** YAHAN BHI CHANGE KIYA GAYA HAI **
+        // Page load hote hi time update ko foran chalana
         updateTime(); 
+        
     </script>
 </body>
 </html>
