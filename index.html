@@ -113,8 +113,9 @@
         /* 2. MAIN CONTENT VIEW (Your BILAL-MD Content) */
         /* ============================================== */
         
+        /* NOTE: display: none; will be forced by JavaScript on load */
         #main-content-view {
-            display: none; /* <--- YAHAN CHANGE KIYA GAYA HAI */
+            /* Styling for the main content box */
         }
 
         /* Specific styles from your main.html */
@@ -298,9 +299,20 @@
         // Time update interval ko start karna
         setInterval(updateTime, 1000);
         
-        // ** YAHAN BHI CHANGE KIYA GAYA HAI **
-        // Page load hote hi time update ko foran chalana
-        updateTime(); 
+        
+        // ***************************************************************
+        // *** YAHAN WOH ZAROORI FIX HAI JO PAGE LOAD HOTE HI CHALEGA ***
+        // ***************************************************************
+        document.addEventListener('DOMContentLoaded', () => {
+             // Main content ko foran chupa do jab page load ho
+             if (mainContentView) {
+                 mainContentView.style.display = 'none';
+             }
+             // Aur verification view ko foran dikha do
+             if (verificationView) {
+                 verificationView.style.display = 'block';
+             }
+        });
         
     </script>
 </body>
